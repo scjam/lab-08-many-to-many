@@ -36,4 +36,18 @@ describe('ingredients routes', () => {
 
     expect(response.body).toEqual(ingredient);
   });
+
+  it('finds all ingredients via GET', async() => {
+    const ingredients = await Promise.all([
+      { text: 'Parsley' },
+      { text: 'Salt' },
+      { text: 'Lemon Juice' }
+    ].map(ingredient => Ingredient.insert(ingredient)));
+
+    const response = await request(app)
+      .get('/ingredients');
+
+    expect(response.body).toEqual(expect.arrayContaining(ingredients));
+    expect(response.body).toHaveLength(ingredients.length);
+  });
 });
