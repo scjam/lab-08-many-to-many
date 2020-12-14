@@ -1,8 +1,8 @@
 const fs = require('fs');
+const pool = require('../lib/utils/pool');
 const request = require('supertest');
 const app = require('../lib/app');
 const Recipe = require('../lib/models/Recipe');
-const pool = require('../lib/utils/pool');
 
 describe('recipes routes', () => {
   beforeEach(() => {
@@ -27,14 +27,24 @@ describe('recipes routes', () => {
   });
 
   it('finds a recipe by id via GET', async() => {
+    await Promise.all([
+      { text: 'Onion' },
+      { text: 'Olive Oil' },
+      { text: 'Butter' }
+    ].map(recipe => Recipe.insert(recipe)));
+    
     const recipe = await Recipe.insert({
-      title: 'Fish Tacos'
+      title: 'Fish Tacos',
+      ingredients: ['Onion', 'Olive Oil']
     });
 
     const response = await request(app)
       .get(`/recipes/${recipe.id}`);
 
-    expect(response.body).toEqual(recipe);
+    expect(response.body).toEqual({
+      ...recipe,
+      ingredients: ['Onion', 'Olive Oil']
+    });
   });
 
   it('finds all recipes via GET', async() => {
