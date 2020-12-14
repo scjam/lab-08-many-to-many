@@ -67,4 +67,15 @@ describe('ingredients routes', () => {
       text: 'Coriander'
     });
   });
+
+  it('deletes an ingredient by id', async() => {
+    const ingredient = await Ingredient.insert({
+      title: 'Mayonnaise'
+    });
+
+    const response = await request(app)
+      .delete(`/ingredients/${ingredient.id}`);
+
+    expect(response.body).toEqual(ingredient);
+  });
 });
