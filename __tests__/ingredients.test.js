@@ -57,7 +57,7 @@ describe('ingredients routes', () => {
     });
 
     const response = await request(app)
-      .put(`/recipes/${ingredient.id}`)
+      .put(`/ingredients/${ingredient.id}`)
       .send({
         text: 'Coriander'
       });
