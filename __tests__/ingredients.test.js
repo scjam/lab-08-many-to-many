@@ -50,4 +50,21 @@ describe('ingredients routes', () => {
     expect(response.body).toEqual(expect.arrayContaining(ingredients));
     expect(response.body).toHaveLength(ingredients.length);
   });
+
+  it('updates an ingredient via PUT', async() => {
+    const ingredient = await Ingredient.insert({
+      text: 'Cumin'
+    });
+
+    const response = await request(app)
+      .put(`/recipes/${ingredient.id}`)
+      .send({
+        text: 'Coriander'
+      });
+
+    expect(response.body).toEqual({
+      id: ingredient.id,
+      text: 'Coriander'
+    });
+  });
 });
