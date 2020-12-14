@@ -50,4 +50,21 @@ describe('recipes routes', () => {
     expect(response.body).toEqual(expect.arrayContaining(recipes));
     expect(response.body).toHaveLength(recipes.length);
   });
+
+  it('updates a recipe via PUT', async() => {
+    const recipe = await Recipe.insert({
+      title: 'Curry Ramen'
+    });
+
+    const response = await request(app)
+      .put(`/recipes/${recipe.id}`)
+      .send({
+        title: 'Peanut Butter and Ramen Noodles'
+      });
+
+    expect(response.body).toEqual({
+      id: recipe.id,
+      title: 'Peanut Butter and Ramen Noodles'
+    });
+  });
 });
