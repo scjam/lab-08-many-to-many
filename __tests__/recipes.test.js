@@ -27,7 +27,7 @@ describe('recipes routes', () => {
     });
   });
 
-  it('finds a recipe by id via GET', async() => {
+  it('finds a recipe and ingredients by id via GET', async() => {
     await Promise.all([
       { text: 'Onion' },
       { text: 'Olive Oil' },

@@ -25,4 +25,15 @@ describe('ingredients routes', () => {
       text: 'Chickpeas'
     });
   });
+
+  it('finds an ingredient by id via GET', async() => {
+    const ingredient = await Ingredient.insert({
+      text: 'Flour'
+    });
+
+    const response = await request(app)
+      .get(`/ingredients/${ingredient.id}`);
+
+    expect(response.body).toEqual(ingredient);
+  });
 });
