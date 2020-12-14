@@ -67,4 +67,15 @@ describe('recipes routes', () => {
       title: 'Peanut Butter and Ramen Noodles'
     });
   });
+
+  it('deletes a recipe by id', async() => {
+    const recipe = await Recipe.insert({
+      title: 'Mayonnaise'
+    });
+
+    const response = await request(app)
+      .delete(`/recipes/${recipe.id}`);
+
+    expect(response.body).toEqual(recipe);
+  });
 });
