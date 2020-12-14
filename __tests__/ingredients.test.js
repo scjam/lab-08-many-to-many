@@ -68,9 +68,9 @@ describe('ingredients routes', () => {
     });
   });
 
-  it.skip('deletes an ingredient by id', async() => {
+  it('deletes an ingredient by id', async() => {
     const ingredient = await Ingredient.insert({
-      title: 'Vinegar'
+      text: 'Vinegar'
     });
 
     const response = await request(app)
