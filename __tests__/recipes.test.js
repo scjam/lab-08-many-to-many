@@ -36,4 +36,18 @@ describe('recipes routes', () => {
 
     expect(response.body).toEqual(recipe);
   });
+
+  it('finds all recipes via GET', async() => {
+    const recipes = await Promise.all([
+      { title: 'PB&Onion Sandwich' },
+      { title: 'Beef Wellington' },
+      { title: 'Chicken Soup' }
+    ].map(recipe => Recipe.insert(recipe)));
+
+    const response = await request(app)
+      .get('/recipes');
+
+    expect(response.body).toEqual(expect.arrayContaining(recipes));
+    expect(response.body).toHaveLength(recipes.length);
+  });
 });
