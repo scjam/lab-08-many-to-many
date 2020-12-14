@@ -1,6 +1,7 @@
 const fs = require('fs');
 const request = require('supertest');
 const app = require('../lib/app');
+const Recipe = require('../lib/models/Recipe');
 const pool = require('../lib/utils/pool');
 
 describe('recipes routes', () => {
@@ -23,5 +24,16 @@ describe('recipes routes', () => {
       id: '1',
       title: 'No Knead Bread'
     });
+  });
+
+  it('finds a recipe by id via GET', async() => {
+    const recipe = await Recipe.insert({
+      title: 'Fish Tacos'
+    });
+
+    const response = await request(app)
+      .get(`/recipes/${recipe.id}`);
+
+    expect(response.body).toEqual(recipe);
   });
 });
