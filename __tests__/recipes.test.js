@@ -3,6 +3,7 @@ const pool = require('../lib/utils/pool');
 const request = require('supertest');
 const app = require('../lib/app');
 const Recipe = require('../lib/models/Recipe');
+const Ingredient = require('../lib/models/Ingredient');
 
 describe('recipes routes', () => {
   beforeEach(() => {
@@ -31,7 +32,7 @@ describe('recipes routes', () => {
       { text: 'Onion' },
       { text: 'Olive Oil' },
       { text: 'Butter' }
-    ].map(recipe => Recipe.insert(recipe)));
+    ].map(ingredient => Ingredient.insert(ingredient)));
     
     const recipe = await Recipe.insert({
       title: 'Fish Tacos',
